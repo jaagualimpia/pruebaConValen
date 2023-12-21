@@ -1,27 +1,40 @@
 "use client"
 
 import NavBar from "@/app/components/NavBar"
+import { PokemonDto } from "@/app/dtos/pokemon.dto"
 import { useEffect, useState } from "react"
 
 interface SpecificPokemonProps {
     params: {
-        name: number
+        name: string
     }
 }
 
 export default function SpecificPokemon({ params }: SpecificPokemonProps) {
     const { name } = params
-    const [pokemon, setPokemon] = useState()
+    const [pokemon, setPokemon] = useState<PokemonDto>(
+        PokemonDto.create({
+            abilities: [],
+            moves: [],
+            sprites: {
+                back_default: "",
+                back_shiny: "",
+                front_default: "",
+                front_shiny: ""
+            },
+            name: ""
+        })
+    )
 
     useEffect(() => {
         const fetchPokemon = async () => {
-            const res = await fetch('https://pokeapi.co/api/v2/pokemon/' + name)
+            const res = await fetch('https://pokeapi.co/api/v2/pokemon/' + name.toLowerCase())
 
             if (!res.ok) {
                 throw new Error('El pokemon de nombre ' + name + ' no existe')
             }
 
-            await res.json().then((data) => setPokemon(data))
+            await res.json().then((data) => setPokemon(PokemonDto.create(data)))
         }
 
         fetchPokemon()
