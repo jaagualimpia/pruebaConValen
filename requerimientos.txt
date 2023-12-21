@@ -1,0 +1,3 @@
+1 - debe de haber una interfaz que permita buscar
+pokemones por el nombre y esta tiene que tener un boton search
+2 - El resultado de la busqueda debe devolver: imagen del pokemon frontal, info de abilities y moves y un boton para desplegar los moves en una pagina distinta 
